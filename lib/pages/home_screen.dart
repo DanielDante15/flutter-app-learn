@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/add_local_screen.dart';
-import 'package:flutter_app/pages/login_screen.dart';
+import 'package:flutter_app/pages/dashboard_screen.dart';
 import 'package:flutter_app/pages/map_screen.dart';
 import 'package:flutter_app/pages/profile.dart';
 
@@ -16,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   final screens = [
-    const LoginScreen(),
+    const DashboardScreen(),
     const MapScreen(),
     const AddLocalScreen(),
     const ProfileScreen(),

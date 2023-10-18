@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nuvigator/next.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({
@@ -8,8 +9,18 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Profile Screen')),
-      body: Center(child: const Text('Informações do usuário')),
+      appBar: AppBar(title: const Text('Profile Screen')),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Center(child: Text('Informações do usuário')),
+          ElevatedButton(
+              onPressed: () {
+                Nuvigator.of(context)!.pushReplacementNamed('login');
+              },
+              child: const Text('Logout'))
+        ],
+      ),
     );
   }
 }

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class Buttom extends StatelessWidget {
   const Buttom({
     super.key,
-    required this.onpress,
+    required this.onPress,
     required this.text,
   });
 
-  final void Function() onpress;
+  final void Function() onPress;
   final String text;
 
   @override
@@ -16,7 +16,7 @@ class Buttom extends StatelessWidget {
       children: [
         Expanded(
           child: ElevatedButton(
-            onPressed: onpress,
+            onPressed: onPress,
             child: Text(text),
           ),
         ),
