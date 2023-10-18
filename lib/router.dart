@@ -15,8 +15,8 @@ class MyRouter extends NuRouter {
 
   @override
   List<NuRoute<NuRouter, Object?, Object?>> get registerRoutes => [
-        HomeRoute(),
         LoginRoute(),
+        HomeRoute(),
         ProfileRoute(),
         SignUpRoute(),
         MapRoute(),

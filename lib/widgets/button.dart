@@ -12,6 +12,15 @@ class Buttom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(onPressed: onpress, child: Text(text));
+    return Row(
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            onPressed: onpress,
+            child: Text(text),
+          ),
+        ),
+      ],
+    );
   }
 }

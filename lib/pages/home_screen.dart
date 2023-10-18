@@ -16,15 +16,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
   final screens = [
-    LoginScreen(),
-    MapScreen(),
-    AddLocalScreen(),
-    ProfileScreen(),
+    const LoginScreen(),
+    const MapScreen(),
+    const AddLocalScreen(),
+    const ProfileScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
