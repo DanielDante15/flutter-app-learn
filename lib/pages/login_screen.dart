@@ -69,20 +69,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 13),
-                        child: LinkButtom(
-                          text: 'Forgot Password',
-                          color: Colors.blue,
-                          fontSize: 16,
-                          onTap: () => print('opaa'),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            LinkButtom(
+                              text: 'Forgot Password',
+                              color: Colors.blue,
+                              fontSize: 16,
+                              onTap: () => print('opaa'),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: LinkButtom(
+                                text: "Register",
+                                color: Colors.blue,
+                                fontSize: 16,
+                                onTap: () => nuvigator!.open('sign-up'),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      Buttom(
-                        text: 'Register',
-                        onPress: () {
-                          if (formkey.currentState!.validate()) {
-                            nuvigator!.open('sign-up');
-                          }
-                        },
                       ),
                     ],
                   ),
