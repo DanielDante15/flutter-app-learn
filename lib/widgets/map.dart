@@ -14,7 +14,7 @@ class MapSampleState extends State<MapSample> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
+  static const CameraPosition initialPosition = CameraPosition(
     target: LatLng(-22.95217437051774, -47.105212648214405),
     zoom: 14.4746,
   );
@@ -24,24 +24,21 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GoogleMap(
+        zoomControlsEnabled: false,
         mapType: MapType.normal,
-        initialCameraPosition: _kGooglePlex,
+        initialCameraPosition: initialPosition,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
-        onTap: (argument) {
+        onTap: (marker) {
           setState(() {
             markers.add(
               Marker(
                   markerId: MarkerId('Marker${markers.length + 1}'),
-                  position: LatLng(argument.latitude, argument.longitude),
+                  position: marker,
                   infoWindow: InfoWindow(
                     title: 'Marker${markers.length + 1}',
-                    onTap: () {
-                      markers.removeWhere((element) =>
-                          element.markerId.value ==
-                          'Marker${markers.length + 1}');
-                    },
+                    snippet: '${marker.latitude},${marker.longitude}',
                   ) // InfoWindow padrão
                   ),
             );

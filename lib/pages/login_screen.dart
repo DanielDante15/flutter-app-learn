@@ -3,6 +3,8 @@ import 'package:flutter_app/widgets/button.dart';
 import 'package:flutter_app/widgets/link_button.dart';
 import 'package:flutter_app/widgets/textfield.dart';
 import 'package:nuvigator/next.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,6 +17,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordControler = TextEditingController();
   final formkey = GlobalKey<FormState>();
+
+  String encryptPassword(String password) {
+    final bytes = utf8.encode(password);
+    final hash = sha256.convert(bytes);
+    return hash.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +84,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               text: 'Forgot Password',
                               color: Colors.blue,
                               fontSize: 16,
-                              onTap: () => print('opaa'),
+                              onTap: () {
+                                String encryptedPassword =
+                                    encryptPassword(passwordControler.text);
+                                print(passwordControler.text);
+                                print(encryptedPassword);
+                              },
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 8.0),
