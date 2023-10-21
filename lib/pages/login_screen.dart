@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widgets/button.dart';
-import 'package:flutter_app/widgets/link_button.dart';
+import 'package:flutter_app/widgets/buttons/button.dart';
+import 'package:flutter_app/widgets/buttons/link_button.dart';
 import 'package:flutter_app/widgets/textfield.dart';
 import 'package:nuvigator/next.dart';
 import 'package:crypto/crypto.dart';
