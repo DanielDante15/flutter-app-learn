@@ -24,15 +24,9 @@ class _DashboardListViewState extends State<DashboardListView> {
         return Card(
           child: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) => Container(
-                      height: MediaQuery.of(context).size.height / 4,
-                      child: Card(child: Text('Finalizar Viagem'))));
-            },
+            onTap: () {},
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -56,14 +50,21 @@ class _DashboardListViewState extends State<DashboardListView> {
                             onTap: () {
                               nuvigator!.open('map');
                             },
-                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
                             color: const Color(0xff6750a4),
                           )
                         ],
                       ),
                     ],
                   ),
-                  Text('8.6 Km')
+                  const Text(
+                    '8.6 Km',
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Color(0xff6750a4),
+                        fontWeight: FontWeight.w600),
+                  )
                 ],
               ),
             ),

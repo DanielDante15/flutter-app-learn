@@ -48,4 +48,20 @@ class Address {
       longitude: json['longitude'],
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'cep': cep,
+      'logradouro': logradouro,
+      'complemento': complemento,
+      'bairro': bairro,
+      'localidade': localidade,
+      'uf': uf,
+      'num_casa': numCasa,
+      'cliente': cliente,
+      'latitude': latitude,
+      'longitude': longitude,
+    };
+  }
 }

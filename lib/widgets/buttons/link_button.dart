@@ -7,10 +7,12 @@ class LinkButtom extends StatelessWidget {
       required this.text,
       required this.onTap,
       required this.fontSize,
-      required this.color});
+      required this.color,
+      this.fontWeight});
   final String text;
   final double fontSize;
   final Color color;
+  final FontWeight? fontWeight;
   final void Function() onTap;
 
   @override
@@ -21,7 +23,7 @@ class LinkButtom extends StatelessWidget {
           style: TextStyle(
             color: color,
             fontSize: fontSize,
-            fontWeight: FontWeight.w400,
+            fontWeight: fontWeight ?? FontWeight.w400,
           ),
           recognizer: TapGestureRecognizer()
             ..onTap = () {

@@ -1,8 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/api/addresses_api.dart';
 import 'package:flutter_app/models/address.dart';
 import 'package:flutter_app/widgets/lists/dashboard_list_view.dart';
-import 'package:http/http.dart' as http;
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -47,16 +46,5 @@ class _DashboardScreenState extends State<DashboardScreen> {
 }
 
 Future<List<Address>> fetchAddresses() async {
-  final response =
-      await http.get(Uri.parse('http://192.168.0.13:8000/enderecos/'));
-
-  if (response.statusCode == 200) {
-    final List<dynamic> jsonData = json.decode(response.body);
-    final List<Address> addressesList =
-        jsonData.map((e) => Address.fromJson(e)).toList();
-    print(jsonData);
-    return addressesList;
-  } else {
-    return List<Address>.empty();
-  }
+  return AddressesApiService().getAddresses();
 }
