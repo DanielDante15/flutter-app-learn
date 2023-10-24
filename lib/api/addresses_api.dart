@@ -6,8 +6,14 @@ class AddressesApiService {
   AddressesApiService();
 
   Future<List<Address>> getAddresses() async {
-    final response =
-        await http.get(Uri.parse('http://192.168.88.104:8000/enderecos/'));
+    final response = await http
+        .get(Uri.parse('http://10.91.147.74:8000/enderecos/'))
+        .timeout(
+      const Duration(seconds: 30),
+      onTimeout: () {
+        throw 'Error while loading delivers ';
+      },
+    );
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonList = json.decode(response.body);
@@ -20,7 +26,7 @@ class AddressesApiService {
 
   Future<Address> getAddressById(int id) async {
     final response =
-        await http.get(Uri.parse('http://192.168.88.104:8000/enderecos/$id'));
+        await http.get(Uri.parse('http://10.91.147.74:8000/enderecos/$id'));
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
@@ -32,7 +38,7 @@ class AddressesApiService {
 
   Future<Address> createAddress(Address address) async {
     final response = await http.post(
-      Uri.parse('http://192.168.88.104:8000/enderecos'),
+      Uri.parse('http://10.91.147.74:8000/enderecos'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(address.toMap()),
     );
@@ -47,7 +53,7 @@ class AddressesApiService {
 
   Future<Address> updateAddress(int id, Address address) async {
     final response = await http.put(
-      Uri.parse('http://192.168.88.104:8000/enderecos/$id'),
+      Uri.parse('http://10.91.147.74:8000/enderecos/$id'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(address.toMap()),
     );
@@ -61,8 +67,8 @@ class AddressesApiService {
   }
 
   Future<void> deleteAddress(int id) async {
-    final response = await http
-        .delete(Uri.parse('http://192.168.88.104:8000/enderecos/$id'));
+    final response =
+        await http.delete(Uri.parse('http://10.91.147.74:8000/enderecos/$id'));
 
     if (response.statusCode != 204) {
       throw Exception('Failed to delete address');

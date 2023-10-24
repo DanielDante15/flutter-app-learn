@@ -12,6 +12,6 @@ class MapRoute extends NuRoute {
 
   @override
   Widget build(BuildContext context, NuRouteSettings<Object?> settings) {
-    return MapScreen();
+    return const MapScreen();
   }
 }
