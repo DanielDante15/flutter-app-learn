@@ -21,7 +21,7 @@ class MapSampleState extends State<MapSample> {
     zoom: 14.4746,
   );
   List<Marker> markers = [];
-  List<LatLng> listCoordinates = [];
+  Circle areaCircle = const Circle(circleId: CircleId(''));
 
   @override
   void initState() {
@@ -33,38 +33,29 @@ class MapSampleState extends State<MapSample> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GoogleMap(
-        zoomControlsEnabled: false,
-        mapType: MapType.normal,
-        initialCameraPosition: initialPosition,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-        onTap: (marker) {
-          // setState(() {
-          //   markers.add(
-          //     Marker(
-          //         markerId: MarkerId('Marker${markers.length + 1}'),
-          //         position: marker,
-          //         infoWindow: InfoWindow(
-          //           title: 'Marker${markers.length + 1}',
-          //           snippet: '${marker.latitude},${marker.longitude}',
-          //         ) // InfoWindow padrão
-          //         ),
-          //   );
-          // });
-          print(listCoordinates);
-        },
-        markers: Set<Marker>.from(markers),
-        circles: {
-          Circle(
-            circleId: CircleId('circle1'),
-            center: listCoordinates[2],
-            radius: 1000,
-            fillColor: Colors.blue.withOpacity(0.3),
-            strokeWidth: 0,
-          ),
-        },
-      ),
+          zoomControlsEnabled: false,
+          mapType: MapType.normal,
+          initialCameraPosition: initialPosition,
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
+          onTap: (marker) async {
+            // setState(() {
+            //   markers.add(
+            //     Marker(
+            //         markerId: MarkerId('Marker${markers.length + 1}'),
+            //         position: marker,
+            //         infoWindow: InfoWindow(
+            //           title: 'Marker${markers.length + 1}',
+            //           snippet: '${marker.latitude},${marker.longitude}',
+            //         ) // InfoWindow padrão
+            //         ),
+            //   );
+            // });
+            await AddressesApiService().getDeliveryArea(id: 3);
+          },
+          markers: Set<Marker>.from(markers),
+          circles: {areaCircle}),
     );
   }
 
@@ -90,18 +81,16 @@ class MapSampleState extends State<MapSample> {
     setState(() {
       markers = markerList;
     });
-    getCoordinates(markerList);
+    getCoordinates();
 
     return markerList;
   }
 
-  getCoordinates(List<Marker> markerList) {
-    List<LatLng> coordinateList = markerList
-        .map((e) => LatLng(e.position.latitude, e.position.longitude))
-        .toList();
+  Future<void> getCoordinates() async {
+    final circle = await AddressesApiService().getDeliveryArea();
 
     setState(() {
-      listCoordinates = coordinateList;
+      areaCircle = circle;
     });
   }
 }
