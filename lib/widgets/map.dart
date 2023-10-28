@@ -21,6 +21,7 @@ class MapSampleState extends State<MapSample> {
     zoom: 14.4746,
   );
   List<Marker> markers = [];
+  List<LatLng> listCoordinates = [];
 
   @override
   void initState() {
@@ -39,20 +40,30 @@ class MapSampleState extends State<MapSample> {
           _controller.complete(controller);
         },
         onTap: (marker) {
-          setState(() {
-            markers.add(
-              Marker(
-                  markerId: MarkerId('Marker${markers.length + 1}'),
-                  position: marker,
-                  infoWindow: InfoWindow(
-                    title: 'Marker${markers.length + 1}',
-                    snippet: '${marker.latitude},${marker.longitude}',
-                  ) // InfoWindow padrão
-                  ),
-            );
-          });
+          // setState(() {
+          //   markers.add(
+          //     Marker(
+          //         markerId: MarkerId('Marker${markers.length + 1}'),
+          //         position: marker,
+          //         infoWindow: InfoWindow(
+          //           title: 'Marker${markers.length + 1}',
+          //           snippet: '${marker.latitude},${marker.longitude}',
+          //         ) // InfoWindow padrão
+          //         ),
+          //   );
+          // });
+          print(listCoordinates);
         },
         markers: Set<Marker>.from(markers),
+        circles: {
+          Circle(
+            circleId: CircleId('circle1'),
+            center: listCoordinates[2],
+            radius: 1000,
+            fillColor: Colors.blue.withOpacity(0.3),
+            strokeWidth: 0,
+          ),
+        },
       ),
     );
   }
@@ -79,7 +90,18 @@ class MapSampleState extends State<MapSample> {
     setState(() {
       markers = markerList;
     });
+    getCoordinates(markerList);
 
     return markerList;
+  }
+
+  getCoordinates(List<Marker> markerList) {
+    List<LatLng> coordinateList = markerList
+        .map((e) => LatLng(e.position.latitude, e.position.longitude))
+        .toList();
+
+    setState(() {
+      listCoordinates = coordinateList;
+    });
   }
 }
