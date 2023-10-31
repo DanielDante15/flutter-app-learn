@@ -119,11 +119,9 @@ class AddressesApiService {
 
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
-        print(jsonData);
-
         double jsonRaio = jsonData['raio'];
 
-        double raio = jsonRaio * 1000;
+        double raio = jsonRaio * 700;
 
         final Circle areaCircle = Circle(
           circleId: const CircleId('Delivery Area'),

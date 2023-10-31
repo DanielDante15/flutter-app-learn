@@ -32,31 +32,29 @@ class MapSampleState extends State<MapSample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-          zoomControlsEnabled: false,
-          mapType: MapType.normal,
-          initialCameraPosition: initialPosition,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-          onTap: (marker) async {
-            // setState(() {
-            //   markers.add(
-            //     Marker(
-            //         markerId: MarkerId('Marker${markers.length + 1}'),
-            //         position: marker,
-            //         infoWindow: InfoWindow(
-            //           title: 'Marker${markers.length + 1}',
-            //           snippet: '${marker.latitude},${marker.longitude}',
-            //         ) // InfoWindow padrão
-            //         ),
-            //   );
-            // });
-            await AddressesApiService().getDeliveryArea(id: 3);
-          },
-          markers: Set<Marker>.from(markers),
-          circles: {areaCircle}),
-    );
+        body: GoogleMap(
+            zoomControlsEnabled: false,
+            mapType: MapType.normal,
+            initialCameraPosition: initialPosition,
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+            onTap: (marker) async {
+              // setState(() {
+              //   markers.add(
+              //     Marker(
+              //         markerId: MarkerId('Marker${markers.length + 1}'),
+              //         position: marker,
+              //         infoWindow: InfoWindow(
+              //           title: 'Marker${markers.length + 1}',
+              //           snippet: '${marker.latitude},${marker.longitude}',
+              //         ) // InfoWindow padrão
+              //         ),
+              //   );
+              // });
+            },
+            markers: Set<Marker>.from(markers),
+            circles: {areaCircle}));
   }
 
   Future<List<Marker>> getMarkers() async {
@@ -88,9 +86,6 @@ class MapSampleState extends State<MapSample> {
 
   Future<void> getCoordinates() async {
     final circle = await AddressesApiService().getDeliveryArea();
-
-    setState(() {
-      areaCircle = circle;
-    });
+    setState(() => areaCircle = circle);
   }
 }
