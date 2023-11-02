@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widgets/buttons/button.dart';
-import 'package:flutter_app/widgets/buttons/link_button.dart';
-import 'package:flutter_app/widgets/textfield.dart';
+import 'package:flutter_app/components/Button/button.dart';
+import 'package:flutter_app/components/Button/link_button.dart';
+import 'package:flutter_app/components/TextField/textfield.dart';
+import 'package:flutter_app/services/api/auth.dart';
+import 'package:flutter_app/validators/password_validator.dart';
 import 'package:nuvigator/next.dart';
-import 'package:crypto/crypto.dart';
-import 'dart:convert';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,15 +14,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  Future<bool>? _loginFuture;
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordControler = TextEditingController();
   final formkey = GlobalKey<FormState>();
-
-  String encryptPassword(String password) {
-    final bytes = utf8.encode(password);
-    final hash = sha256.convert(bytes);
-    return hash.toString();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,19 +57,34 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: EdgeInsets.only(bottom: 6),
                           child: Text('Password')),
                       MyTextField(
+                        // validator: (value) => passwordValidator(value),
                         controller: passwordControler,
                         isObscure: true,
                         labelText: 'Insert your password',
                       ),
                       const SizedBox(height: 20),
-                      Buttom(
-                        text: 'Login',
-                        onPress: () {
-                          if (formkey.currentState!.validate()) {
-                            nuvigator!.pushReplacementNamed('home');
+                      FutureBuilder<bool>(
+                        future: _loginFuture,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
                           }
+                          return Buttom(
+                            text: 'Login',
+                            onPress: () async {
+                              setState(() {
+                                _loginFuture = Auth().login(
+                                    usernameController.text,
+                                    passwordControler.text,
+                                    context);
+                              });
+                            },
+                          );
                         },
                       ),
+                      const SizedBox(height: 20),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 13),
                         child: Row(
@@ -84,12 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               text: 'Forgot Password',
                               color: Colors.blue,
                               fontSize: 16,
-                              onTap: () {
-                                String encryptedPassword =
-                                    encryptPassword(passwordControler.text);
-                                print(passwordControler.text);
-                                print(encryptedPassword);
-                              },
+                              onTap: () {},
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 8.0),

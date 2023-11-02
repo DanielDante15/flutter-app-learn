@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widgets/map.dart';
+import 'package:flutter_app/components/Map/map.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({

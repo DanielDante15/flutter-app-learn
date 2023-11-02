@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/address.dart';
-import 'package:flutter_app/widgets/buttons/link_button.dart';
+import 'package:flutter_app/components/Button/link_button.dart';
 import 'package:nuvigator/next.dart';
 
 class DashboardListView extends StatefulWidget {

@@ -1,5 +1,4 @@
-// ignore: implementation_imports
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/sign_up_screen.dart';
 import 'package:nuvigator/next.dart';
 

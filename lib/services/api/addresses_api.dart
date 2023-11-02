@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/env.dart';
+import 'package:flutter_app/assets/env.dart';
 import 'package:flutter_app/models/address.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -12,7 +12,7 @@ class AddressesApiService {
 
   Future<List<Address>> getAddresses() async {
     final response =
-        await http.get(Uri.parse("http://$url:8000/enderecos/")).timeout(
+        await http.get(Uri.parse("http://$url/enderecos/")).timeout(
       const Duration(seconds: 30),
       onTimeout: () {
         throw 'Error while loading delivers ';
@@ -30,7 +30,7 @@ class AddressesApiService {
 
   Future<Address> getAddressById(int id) async {
     final response =
-        await http.get(Uri.parse('http://$url:8000/enderecos/$id')).timeout(
+        await http.get(Uri.parse('http://$url/enderecos/$id')).timeout(
       const Duration(seconds: 30),
       onTimeout: () {
         throw 'Error while loading delivers ';
@@ -49,7 +49,7 @@ class AddressesApiService {
   Future<Address> createAddress(Address address) async {
     final response = await http
         .post(
-      Uri.parse('http://$url:8000/enderecos'),
+      Uri.parse('http://$url/enderecos'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(address.toMap()),
     )
@@ -72,7 +72,7 @@ class AddressesApiService {
   Future<Address> updateAddress(int id, Address address) async {
     final response = await http
         .put(
-      Uri.parse('http://$url:8000/enderecos/$id'),
+      Uri.parse('http://$url/enderecos/$id'),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(address.toMap()),
     )
@@ -94,7 +94,7 @@ class AddressesApiService {
 
   Future<void> deleteAddress(int id) async {
     final response =
-        await http.delete(Uri.parse('http://$url:8000/enderecos/$id')).timeout(
+        await http.delete(Uri.parse('http://$url/enderecos/$id')).timeout(
       const Duration(seconds: 30),
       onTimeout: () {
         throw 'Error while loading delivers ';
@@ -110,7 +110,7 @@ class AddressesApiService {
   Future<Circle> getDeliveryArea({int? id}) async {
     if (id == null) {
       final response =
-          await http.get(Uri.parse('http://$url:8000/area-entrega/')).timeout(
+          await http.get(Uri.parse('http://$url/area-entrega/')).timeout(
         const Duration(seconds: 30),
         onTimeout: () {
           throw 'Error while loading delivers ';
@@ -137,9 +137,8 @@ class AddressesApiService {
         throw Exception(errorMsg["detail"]);
       }
     } else {
-      final response = await http
-          .get(Uri.parse('http://$url:8000/area-entrega/$id/'))
-          .timeout(
+      final response =
+          await http.get(Uri.parse('http://$url/area-entrega/$id/')).timeout(
         const Duration(seconds: 30),
         onTimeout: () {
           throw 'Error while loading delivers ';

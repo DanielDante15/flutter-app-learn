@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/api/addresses_api.dart';
+import 'package:flutter_app/services/api/addresses_api.dart';
 import 'package:flutter_app/models/address.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 

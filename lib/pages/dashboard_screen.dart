@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/api/addresses_api.dart';
+import 'package:flutter_app/services/api/addresses_api.dart';
 import 'package:flutter_app/models/address.dart';
-import 'package:flutter_app/widgets/lists/dashboard_list_view.dart';
+import 'package:flutter_app/components/List/dashboard_list_view.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
