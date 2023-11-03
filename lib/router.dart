@@ -13,7 +13,7 @@ import 'routes/sign_up_route.dart';
 
 class MyRouter extends NuRouter {
   @override
-  String get initialRoute => 'login';
+  String get initialRoute => 'index';
 
   @override
   List<NuRoute<NuRouter, Object?, Object?>> get registerRoutes => [

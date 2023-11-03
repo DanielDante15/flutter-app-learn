@@ -1,0 +1,13 @@
+{
+    "id": 1,
+    "cep": "13060-737",
+    "logradouro": "Rua Marcelo Ferreira Albiere",
+    "complemento": "",
+    "bairro": "Parque Residencial Vila UniÃ£o",
+    "localidade": "Campinas",
+    "uf": "SP",
+    "num_casa": "57",
+    "latitude": -22.9384431,
+    "longitude": -47.1205212,
+    "cliente": null
+}

@@ -7,7 +7,7 @@ class Address {
   final String? localidade;
   final String? uf;
   final String? numCasa;
-  final String cliente;
+  final String? cliente;
   final double? latitude;
   final double? longitude;
 

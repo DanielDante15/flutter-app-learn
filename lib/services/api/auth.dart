@@ -1,21 +1,19 @@
 import 'dart:convert';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_app/assets/env.dart';
 import 'package:flutter_app/components/SnackBar/snacknbar.dart';
+import 'package:flutter_app/models/user.dart';
 import 'package:http/http.dart' as http;
-import 'package:nuvigator/next.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Auth extends UrlEnviroment {
-  Future<bool> login(
-      String username, String password, BuildContext context) async {
-    final nuvigator = Nuvigator.of(context);
+  Future<Map<String, dynamic>> login(String username, String password) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     final response = await http
         .post(Uri.parse('http://${super.env}/login'),
             headers: {'content-type': 'application/json'},
             body: json.encode({"username": username, "password": password}))
         .timeout(
-      const Duration(seconds: 5),
+      const Duration(seconds: 30),
       onTimeout: () {
         SnackbarManager()
             .showErrorSnackbar('Username or password are incorrects');
@@ -23,37 +21,34 @@ class Auth extends UrlEnviroment {
       },
     );
     if (response.statusCode == 200) {
-      print(response.body);
-      nuvigator!.open('home');
-      return true;
+      Map<String, dynamic> resBody =
+          jsonDecode(const Utf8Decoder().convert(response.bodyBytes));
+      sharedPreferences.setString('token', resBody['token']);
+      sharedPreferences.setString('user', jsonEncode(resBody['usuario']));
+
+      final user = User.fromJson(resBody['usuario']);
+      print('ate aqui foi');
+
+      return {"isAuth": true, "user": user};
     } else {
       SnackbarManager()
           .showErrorSnackbar('Username or password are incorrects');
-      print(response.body);
-      return false;
+      return {"isAuth": false};
     }
   }
 
-  // Future<Address> createAddress(Address address) async {
-  //   final response = await http
-  //       .post(
-  //     Uri.parse('http://${super.env}/enderecos'),
-  //     headers: {'Content-Type': 'application/json'},
-  //     body: json.encode(address.toMap()),
-  //   )
-  //       .timeout(
-  //     const Duration(seconds: 30),
-  //     onTimeout: () {
-  //       throw 'Error while loading delivers ';
-  //     },
-  //   );
-
-  //   if (response.statusCode == 201) {
-  //     final jsonData = json.decode(response.body);
-  //     return Address.fromJson(jsonData);
-  //   } else {
-  //     Map<String, dynamic> errorMsg = json.decode(response.body);
-  //     throw Exception(errorMsg["detail"]);
-  //   }
-  // }
+  Future<Map<String, dynamic>> isAuth() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getString('token') != null) {
+      final usuario = prefs.getString('user');
+      if (usuario != null) {
+        final json = jsonDecode(usuario);
+        final user = User.fromJson(json);
+        return {"isAuth": true, "user": user};
+      }
+      return {"isAuth": false};
+    } else {
+      return {"isAuth": false};
+    }
+  }
 }

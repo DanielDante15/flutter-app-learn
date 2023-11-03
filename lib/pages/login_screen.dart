@@ -14,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  Future<bool>? _loginFuture;
+  Future<Map<String, dynamic>>? _loginFuture;
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordControler = TextEditingController();
   final formkey = GlobalKey<FormState>();
@@ -57,13 +57,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: EdgeInsets.only(bottom: 6),
                           child: Text('Password')),
                       MyTextField(
-                        // validator: (value) => passwordValidator(value),
+                        validator: (value) => passwordValidator(value),
                         controller: passwordControler,
                         isObscure: true,
                         labelText: 'Insert your password',
                       ),
                       const SizedBox(height: 20),
-                      FutureBuilder<bool>(
+                      FutureBuilder<Map<String, dynamic>>(
                         future: _loginFuture,
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
@@ -74,12 +74,24 @@ class _LoginScreenState extends State<LoginScreen> {
                           return Buttom(
                             text: 'Login',
                             onPress: () async {
-                              setState(() {
-                                _loginFuture = Auth().login(
-                                    usernameController.text,
-                                    passwordControler.text,
-                                    context);
-                              });
+                              if (formkey.currentState!.validate()) {
+                                setState(() {
+                                  _loginFuture = Auth()
+                                      .login(usernameController.text,
+                                          passwordControler.text)
+                                      .then((value) {
+                                    if (value['isAuth'] == true) {
+                                      nuvigator!.pushReplacementNamed(
+                                        'home',
+                                        arguments: {'user': value['user']},
+                                      );
+                                      return {};
+                                    }
+                                    passwordControler.clear();
+                                    return {};
+                                  });
+                                });
+                              }
                             },
                           );
                         },
